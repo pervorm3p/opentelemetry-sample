@@ -113,7 +113,9 @@ builder.Services.AddOpenTelemetry( )
         .AddAspNetCoreInstrumentation()
         .AddMeter(CustomMetrics.Default.Name)
         .AddView(CustomMetrics.PingDelay.Name, CustomMetrics.PingDelayView)
-        .AddPrometheusExporter()
+        .AddPrometheusExporter(o => o
+            .DisableTotalNameSuffixForCounters = true
+        )
 
     );
     
