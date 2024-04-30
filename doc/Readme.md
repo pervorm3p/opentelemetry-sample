@@ -30,6 +30,7 @@ __FILE_CONTENT__
 ```
 ## Configure service
 
+
 - [opentelemetry prometheus](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Exporter.Prometheus.AspNetCore/README.md)
 
 
@@ -48,3 +49,8 @@ app.UseOpenTelemetryPrometheusScrapingEndpoint(
             && context.Connection.LocalPort == 5067);
 
 ```
+
+
+## Advanced
+
+[historgrams](https://www.asserts.ai/blog/opentelemetry-histograms-with-prometheus/)
