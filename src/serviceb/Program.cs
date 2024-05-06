@@ -96,6 +96,7 @@ builder.Services.AddOpenTelemetry( )
                 .AddSource(CustomTraces.Default.Name)
                 .AddConsoleExporter();
 
+            
             builder.Services.Configure<AspNetCoreTraceInstrumentationOptions>(builder.Configuration.GetSection("AspNetCoreInstrumentation"));
             traceBuilder.AddOtlpExporter(otlpOptions =>
             {

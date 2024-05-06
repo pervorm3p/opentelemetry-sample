@@ -7,6 +7,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using ServiceA.Configuration;
 using ServiceA;
+using System;
 
 
 
@@ -35,7 +36,7 @@ var resourceAttributes = new Dictionary<string, object> {
     { "serviceVersion", typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown" },
     { "service.instance.id", Environment.MachineName }};
 
-
+//throw new Exception("Not implemented");
 
 
 builder.Services.AddOpenTelemetry()
