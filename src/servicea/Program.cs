@@ -8,6 +8,7 @@ using OpenTelemetry.Trace;
 using ServiceA.Configuration;
 using ServiceA;
 using System;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 
 
 
@@ -38,6 +39,18 @@ var resourceAttributes = new Dictionary<string, object> {
 
 //throw new Exception("Not implemented");
 
+builder.Logging.ClearProviders();
+builder.Logging.AddOpenTelemetry(options =>
+{
+    options
+        .SetResourceBuilder(
+            ResourceBuilder.CreateDefault()
+                .AddAttributes(resourceAttributes)
+        )
+        .AddOtlpExporter()
+        .AddConsoleExporter();
+});
+
 
 builder.Services.AddOpenTelemetry()
     /*options =>
@@ -47,6 +60,9 @@ builder.Services.AddOpenTelemetry()
         options.ConnectionString = "InstrumentationKey=191a9ecb-1dde-4597-9f92-4d16a57883bd;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/";
     });
     */
+    .UseAzureMonitor()
+
+
     //      .AddJaegerExporter() -- tracing
     .ConfigureResource(resourceBuilder => resourceBuilder
         .AddAttributes(resourceAttributes)
@@ -85,7 +101,7 @@ Action<ResourceBuilder> buildOpenTelemetryResource = builder => builder
         .Build();
 */
 
-builder.Services.Configure<JaegerExporterOptions>(builder.Configuration.GetSection("Jaeger"));
+//builder.Services.Configure<JaegerExporterOptions>(builder.Configuration.GetSection("Jaeger"));
 
 
 var app = builder.Build();

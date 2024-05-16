@@ -10,6 +10,7 @@ using System.Diagnostics.Metrics;
 
 
 using ServiceB;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,6 +55,7 @@ builder.Logging.AddOpenTelemetry(options =>
             ResourceBuilder.CreateDefault()
                 .AddAttributes(resourceAttributes)
         )
+        .AddOtlpExporter()
         .AddConsoleExporter();
 });
 
@@ -84,9 +86,12 @@ builder.Services.Configure<OpenTelemetryLoggerOptions>(opt =>
 
 builder.Services.AddOpenTelemetry( )
     
+    .UseAzureMonitor()
     .ConfigureResource(resourceBuilder => resourceBuilder
         .AddAttributes(resourceAttributes)
     )
+   
+
     .WithTracing(traceBuilder =>  
         { 
             traceBuilder
@@ -114,6 +119,7 @@ builder.Services.AddOpenTelemetry( )
         .AddAspNetCoreInstrumentation()
         .AddMeter(CustomMetrics.Default.Name)
         .AddView(CustomMetrics.PingDelay.Name, CustomMetrics.PingDelayView)
+        .AddOtlpExporter()
         .AddPrometheusExporter(o => o
             .DisableTotalNameSuffixForCounters = true
         )

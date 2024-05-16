@@ -5,7 +5,7 @@ Create a file:
 
 - Properties/launchSettings.json
 
-Go to project run and run:
+Go to project service a and b and run:
 
 ```
 dotnet run --launch-profile https
