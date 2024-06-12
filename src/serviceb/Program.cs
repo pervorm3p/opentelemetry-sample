@@ -25,7 +25,7 @@ builder.Services.AddSwaggerGen();
 
 var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0";
 var resourceAttributes = new Dictionary<string, object> {
-    { "service.name", "Service-A" },
+    { "service.name", "Service-B" },
     { "service.namespace", "pevo-namespace" },
     { "serviceVersion", assemblyVersion },
     { "service.instance.id", Environment.MachineName }};

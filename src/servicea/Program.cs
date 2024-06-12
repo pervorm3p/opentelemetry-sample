@@ -34,7 +34,7 @@ var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToStrin
 var resourceAttributes = new Dictionary<string, object> {
     { "service.name", "Service-A" },
     { "service.namespace", "pevo-namespace" },
-    { "serviceVersion", typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown" },
+    { "serviceVersion", assemblyVersion },
     { "service.instance.id", Environment.MachineName }};
 
 //throw new Exception("Not implemented");
@@ -51,6 +51,13 @@ builder.Logging.AddOpenTelemetry(options =>
         .AddConsoleExporter();
 });
 
+builder.Services.Configure<OpenTelemetryLoggerOptions>(opt =>
+{
+    opt.IncludeScopes = true;
+    opt.ParseStateValues = true;
+    opt.IncludeFormattedMessage = true;
+    
+});
 
 builder.Services.AddOpenTelemetry()
     /*options =>
